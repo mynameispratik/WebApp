@@ -1,4 +1,5 @@
-FROM tomcat:8
-COPY target/*.war /usr/local/tomcat/webapps/
+FROM tomcat:9
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY ./target/*.war /usr/local/tomcat/webapps/demo.war
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
