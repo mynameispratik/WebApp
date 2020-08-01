@@ -9,5 +9,11 @@
 <body>
 <h1>WELCOME TO DEVOPS</h1>
 <h1>DOCKERIZING JENKINS PIPELINE</h1>
-</body>
+    </br>
+    </br>
+<ol>
+    <li>Jenkins</li>
+    <li>Docker</li>
+    </ol>
+    </body>
 </html>
