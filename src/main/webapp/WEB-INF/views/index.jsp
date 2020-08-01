@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>WELCOME TO DOCKERIZING PIPELINE DEMO</h1>
+<h1>WELCOME TO DEVOPS</h1>
+<h1>DOCKERIZING JENKINS PIPELINE</h1>
 </body>
 </html>
