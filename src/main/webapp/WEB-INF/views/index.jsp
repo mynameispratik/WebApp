@@ -14,6 +14,7 @@
 <ol>
     <li>Jenkins</li>
     <li>Docker</li>
+    <li>Jfrog</li>
     </ol>
     </body>
 </html>
