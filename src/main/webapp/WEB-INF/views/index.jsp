@@ -15,6 +15,7 @@
     <li>Jenkins</li>
     <li>Docker</li>
     <li>Jfrog</li>
+    <li>sonar</li>
     </ol>
     </body>
 </html>
