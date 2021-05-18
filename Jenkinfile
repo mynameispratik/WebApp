@@ -1,0 +1,50 @@
+node {
+    def server = Artifactory.server 'jfrog'
+	try{
+		stage('Checkout') {
+			git credentialsId: 'gituser', url: 'https://github.com/mynameispratik/WebApp.git'
+		}
+
+		stage('Compile') {
+			sh 'mvn compile'
+		}   
+    
+		stage('Test') {
+			sh 'mvn test'
+	        junit 'target/surefire-reports/*xml'
+		}   
+    
+		stage('Static Code Analysis'){
+			withSonarQubeEnv(credentialsId: 'sonar') {
+				sh 'mvn sonar:sonar'  
+			}
+		}
+
+		stage("SonarQube Quality Gate") { 
+			timeout(time: 60, unit: 'SECONDS') { 
+				def qg = waitForQualityGate() 
+				if (qg.status != 'OK') {
+					error "Pipeline aborted due to quality gate failure: ${qg.status}"
+				}else{
+					stage('Package'){
+						sh 'mvn package -Dmaven.test.skip=true'
+                
+					}
+					stage('Upload'){
+						def uploadSpec= """{
+                        "files": [{
+                        "pattern": "target/*.war",
+                        "target": "spring-webapp"}]
+						}"""
+						server.upload(uploadSpec)
+					}
+				}
+			}
+       
+			build wait: false, job: 'spring-webapp QA deploy'
+        
+		}
+	}catch(error){
+     emailext body: "Cause:- ${error} \n Build number ${BUILD_NUMBER}. Please verify the build", recipientProviders: [developers()], subject: 'BUILD FAILURE', to: 'pratik.kolkar@yahoo.com'
+	}
+}
